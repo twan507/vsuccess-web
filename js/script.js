@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
             }, 300); // Additional timeout for fade effect
-        }, 3000);
+        }, 1500);
     }
     
-    // We don't need to adjust iframe width anymore since it's 100% by default
+    // Function to adjust layout 
     function setupLayout() {
         const headerHeight = document.querySelector('header').offsetHeight;
         const mainElement = document.querySelector('main');
@@ -59,18 +59,5 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.removeItem('isAuthenticated');
         sessionStorage.removeItem('username');
         window.location.href = 'login.html';
-    });
-    
-    // Add smooth scrolling for navigation
-    document.querySelectorAll('nav a:not(#logout)').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // For now just scroll to top as we don't have multiple sections
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
     });
 });

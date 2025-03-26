@@ -75,9 +75,58 @@ header {
 }
 
 .header-bottom {
-    height: 20px; /* Thin separator line */
     background-color: green; /* Updated dark green color */
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Shadow effect below */
+    display: flex;
+    align-items: center;
+    height: 30px; /* Adjusted height for better proportions */
+}
+
+.header-bottom .container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Main Navigation Styles */
+.main-nav {
+    width: 100%;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: left;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+.main-nav ul li {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.main-nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    font-weight: 500;
+    font-size: 14px; /* Reduced font size from default */
+    transition: background-color 0.3s ease;
+}
+
+.main-nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.main-nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.25);
+    font-weight: bold;
 }
 
 .logo {
@@ -334,5 +383,21 @@ footer .container {
     
     nav ul li {
         margin: 0 10px;
+    }
+    
+    .main-nav ul {
+        flex-direction: row;
+        width: 100%;
+    }
+    
+    .main-nav ul li {
+        flex: 1;
+        text-align: center;
+    }
+    
+    .main-nav ul li a {
+        padding: 0 10px;
+        font-size: 12px; /* Reduced font size for mobile view */
+        height: 40px;
     }
 }
