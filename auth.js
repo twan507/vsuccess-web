@@ -18,56 +18,65 @@ document.addEventListener('DOMContentLoaded', function() {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
             
-            // For debugging - remove in production
-            console.log("Login attempt:", username);
+            if (!username || !password) {
+                showError("Vui lòng nhập tên đăng nhập và mật khẩu");
+                return;
+            }
             
-            // Alternative authentication method for local file system
-            // Hardcoded credentials as a fallback when JSON loading fails
-            const validUsers = [
-                { username: "admin", password: "admin123" },
+            console.log("Login attempt for:", username);
+            
+            // IMPORTANT: Hardcoded credentials as ultimate fallback
+            // This ensures login works even if JSON or fetch fails
+            const validCredentials = [
+                { username: "admin", password: "admin1234" },
                 { username: "user", password: "user123" }
             ];
             
+            // First check hardcoded credentials
+            const matchedCredential = validCredentials.find(cred => 
+                cred.username === username && cred.password === password);
+            
+            if (matchedCredential) {
+                console.log("Direct authentication successful");
+                loginSuccess(username);
+                return;
+            }
+            
+            // If not matched with hardcoded credentials, try fetching users.json
+            console.log("Direct authentication failed, trying JSON file...");
             try {
-                // Try to fetch users from JSON file
-                fetch('users.json')
+                const jsonUrl = new URL('users.json', window.location.href).href;
+                console.log("Fetching from:", jsonUrl);
+                
+                fetch(jsonUrl)
                     .then(response => {
+                        console.log("JSON response status:", response.status);
                         if (!response.ok) {
-                            throw new Error('Network response was not ok: ' + response.statusText);
+                            throw new Error(`Failed to load users.json: ${response.status}`);
                         }
                         return response.json();
                     })
                     .then(data => {
-                        console.log("Users data loaded successfully");
+                        console.log("JSON data loaded successfully");
                         const foundUser = data.users.find(user => 
                             user.username === username && user.password === password);
                         
                         if (foundUser) {
                             loginSuccess(username);
                         } else {
-                            loginFailed();
+                            loginFailed("Tên đăng nhập hoặc mật khẩu không đúng!");
                         }
                     })
-                    .catch(error => {
-                        console.error('Error loading users from JSON:', error);
-                        
-                        // Fallback to hardcoded credentials
-                        console.log("Falling back to hardcoded credentials");
-                        const foundUser = validUsers.find(user => 
-                            user.username === username && user.password === password);
-                            
-                        if (foundUser) {
-                            loginSuccess(username);
-                        } else {
-                            loginFailed();
-                        }
+                    .catch(err => {
+                        console.error("JSON authentication error:", err);
+                        loginFailed("Tên đăng nhập hoặc mật khẩu không đúng!");
                     });
             } catch (err) {
-                console.error('Exception in authentication:', err);
-                alert('Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại sau.');
+                console.error("Exception during authentication:", err);
+                loginFailed("Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại sau.");
             }
         });
     }
@@ -78,17 +87,22 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.setItem('username', username);
         
         // Redirect to dashboard
-        console.log("Authentication successful, redirecting to dashboard");
+        console.log(`Authentication successful for ${username}, redirecting to dashboard`);
         window.location.href = 'index.html';
     }
     
-    function loginFailed() {
+    function loginFailed(message = "Tên đăng nhập hoặc mật khẩu không đúng!") {
         // Show error message
-        const errorMessage = document.getElementById('error-message');
-        errorMessage.style.display = 'block';
+        showError(message);
         
         // Clear password field
         document.getElementById('password').value = '';
         console.log("Authentication failed");
+    }
+    
+    function showError(message) {
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
     }
 });
