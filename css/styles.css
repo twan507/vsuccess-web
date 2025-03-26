@@ -191,6 +191,13 @@ main h2 {
     border-radius: 4px;
 }
 
+/* User display style */
+#user-display {
+    color: green;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
 .login-btn {
     width: 100%;
     padding: 10px;
@@ -211,6 +218,29 @@ main h2 {
     margin-top: 10px;
     text-align: center;
     display: none;
+}
+
+/* Added styles for password wrapper and toggle icon */
+.password-wrapper {
+    position: relative;
+}
+.password-wrapper input {
+    padding-right: 32px; /* Adjusted to leave space for the icon inside the input */
+}
+
+/* New styles for the toggle password icon image */
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.toggle-password img {
+    margin-top: 10px;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 /* Footer styles */

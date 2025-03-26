@@ -40,8 +40,15 @@ document.addEventListener('DOMContentLoaded', function() {
     setupLayout();
     window.addEventListener('resize', setupLayout);
     
-    // Add logout functionality to the top navigation
+    // Add username display and logout functionality to the top navigation
     const navItems = document.querySelector('.top-nav ul');
+    
+    // Add username display
+    const userItem = document.createElement('li');
+    userItem.innerHTML = `<span id="user-display">Xin chào, <strong>${username}</strong></span>`;
+    navItems.appendChild(userItem);
+    
+    // Add logout button
     const logoutItem = document.createElement('li');
     logoutItem.innerHTML = '<a href="#" id="logout"><strong>Đăng xuất</strong></a>';
     navItems.appendChild(logoutItem);

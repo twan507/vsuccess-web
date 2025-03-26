@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VSUCCESS</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="photo/favion.ico" type="image/x-icon">
     <link rel="shortcut icon" href="photo/favion.ico" type="image/x-icon">
 </head>
@@ -35,7 +35,13 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Mật khẩu</label>
-                        <input type="password" id="password" name="password" required>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" required>
+                            <!-- Changed toggle password icon to use PNG image -->
+                            <span id="togglePassword" class="toggle-password">
+                                <img src="photo/show.png" alt="Hiện mật khẩu">
+                            </span>
+                        </div>
                     </div>
                     <button type="submit" class="login-btn">Đăng nhập</button>
                     <div id="error-message" class="error-message">Tên đăng nhập hoặc mật khẩu không đúng!</div>
@@ -54,6 +60,7 @@
         </div>
     </footer>
 
-    <script src="auth.js"></script>
+    <script src="js/users.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
